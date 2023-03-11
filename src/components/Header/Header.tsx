@@ -2,6 +2,7 @@ import { Link, NavLink } from 'react-router-dom';
 import styles from './Header.module.scss';
 import logo from '../../assets/icons/logo.png';
 import { Counter } from '../Counter';
+import { useAppSelector } from '../../features/hooks/hooks';
 
 export const ROUTER = {
   home: '/',
@@ -15,6 +16,8 @@ export const ROUTER = {
 };
 
 export const Header = () => {
+
+  const { items } = useAppSelector(state => state.cartReducer)
 
   return (
     <div className={styles.header}>
@@ -45,11 +48,11 @@ export const Header = () => {
       </nav>
 
       <div className={styles.header__icons}>
-        {/* {items.length > 0 && (
+        {items.length > 0 && (
           <div className={styles.header__heart}>
             <Counter count={items.length} />
           </div>
-        )} */}
+        )}
 
         <NavLink to="/cart" className={styles.header__item}>
           <div className={styles.header__cart}></div>
