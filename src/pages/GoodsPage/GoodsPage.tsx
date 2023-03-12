@@ -9,6 +9,7 @@ import { SortField } from '../../components/SortField';
 import { SortType } from '../../types/SortType';
 import { Product } from '../../types/Product';
 import { sortItems } from '../../helpers/sortFunc';
+import { AuthSnackbar } from '../../components/AuthSnackBar';
 
 interface Props {
   goodsList: Product[],
@@ -37,6 +38,7 @@ export const GoodsPage: React.FC<Props> = ({ goodsList, title }) => {
       <SortField sortBy={sortBy} handleStatus={handleStatus} />
 
       <GoodsList itemsList={sortedGoods} />
+      <AuthSnackbar />
     </section>
   );
 };

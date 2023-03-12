@@ -131,4 +131,17 @@
 
     z-index: 1;
   }
+
+  &__signIn {
+    position: absolute;
+    bottom: 42px;
+    right: 0px;
+
+    width: 20px;
+    height: 20px;
+    background-image: url('../../assets/icons/signin.png');
+    background-size: contain;
+
+    z-index: 1;
+  }
 }

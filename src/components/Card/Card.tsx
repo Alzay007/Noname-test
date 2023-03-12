@@ -5,6 +5,8 @@ import styles from './Card.module.scss';
 import { useAppDispatch, useAppSelector } from '../../features/hooks/hooks';
 import { addItem, removeItem } from '../../features/reducers/cartSlice';
 import { BASE_URL } from '../../features/reducers/actionCreators';
+import { openSnackBar } from '../../features/reducers/snackSlice';
+import { useAuth } from '../../features/hooks/useAuth';
 
 interface Props {
   product: Product;
@@ -13,6 +15,7 @@ interface Props {
 export const Card: React.FC<Props> = ({ product }) => {
   const { name, fullPrice, capacity, screen, rating, image } = product;
   const dispatch = useAppDispatch();
+  const { isAuth } = useAuth();
 
   const { items } = useAppSelector(state => state.cartReducer)
 
@@ -26,9 +29,13 @@ export const Card: React.FC<Props> = ({ product }) => {
     }
   };
 
+  const handleSetOpenSnack = () => {
+    dispatch(openSnackBar())
+  }
+
   return (
     <div className={styles.card}>
-      <NavLink to={`/${product.itemId}`}>
+      <NavLink to={`/goods/${product.itemId}`}>
         <img
           src={`${BASE_URL}/${image}`}
           alt="card-logo"
@@ -58,14 +65,25 @@ export const Card: React.FC<Props> = ({ product }) => {
         </div>
       </div>
       <div className={styles.card_buttons}>
-        <button
-          className={classNames(styles.card_checkout, {
-            [styles.card_uncheckout]: isCardInArray,
-          })}
-          onClick={handleSetCardInData}
-        >
-          {isCardInArray ? 'Added' : 'Add to cart'}
-        </button>
+        {isAuth ? (
+          <button
+            className={classNames(styles.card_checkout, {
+              [styles.card_uncheckout]: isCardInArray,
+            })}
+            onClick={handleSetCardInData}
+          >
+            {isCardInArray ? 'Added' : 'Add to cart'}
+          </button>
+        ) : (
+          <button
+            className={classNames(styles.card_checkout, {
+              [styles.card_uncheckout]: isCardInArray,
+            })}
+            onClick={handleSetOpenSnack}
+          >
+            {isCardInArray ? 'Added' : 'Add to cart'}
+          </button>
+        )}
       </div>
     </div>
   );

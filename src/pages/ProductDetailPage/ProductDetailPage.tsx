@@ -6,12 +6,16 @@ import { BASE_URL } from '../../features/reducers/actionCreators';
 import { useParams } from 'react-router-dom';
 import classNames from 'classnames';
 import { addItem, removeItem } from '../../features/reducers/cartSlice';
+import { AuthSnackbar } from '../../components/AuthSnackBar';
+import { openSnackBar } from '../../features/reducers/snackSlice';
+import { useAuth } from '../../features/hooks/useAuth';
 
 export const ProductDetailPage = () => {
   const dispatch = useAppDispatch();
   const { isLoading, goods } = useAppSelector(state => state.goodsReducer);
   const { items } = useAppSelector(state => state.cartReducer)
   const { itemId } = useParams();
+  const { isAuth } = useAuth();
 
   const currentProduct = goods.find(item => item.itemId === itemId);
 
@@ -26,6 +30,10 @@ export const ProductDetailPage = () => {
       dispatch(removeItem(currentId));
     }
   };
+
+  const handleSetOpenSnack = () => {
+    dispatch(openSnackBar())
+  }
 
   return (
     <div className={styles.detail}>
@@ -73,16 +81,28 @@ export const ProductDetailPage = () => {
             </div>
           </div>
 
-          <button
-            className={classNames(styles.detail__checkout, {
-              [styles.detail__uncheckout]: isCardInArray,
-            })}
-            onClick={handleSetCardInData}
-          >
-            {isCardInArray ? 'Added' : 'Add to cart'}
-          </button>
+          {isAuth ? (
+            <button
+              className={classNames(styles.detail__checkout, {
+                [styles.detail__uncheckout]: isCardInArray,
+              })}
+              onClick={handleSetCardInData}
+            >
+              {isCardInArray ? 'Added' : 'Add to cart'}
+            </button>
+          ) : (
+            <button
+              className={classNames(styles.detail__checkout, {
+                [styles.detail__uncheckout]: isCardInArray,
+              })}
+              onClick={handleSetOpenSnack}
+            >
+              {isCardInArray ? 'Added' : 'Add to cart'}
+            </button>
+          )}
         </div>
       </div>
+      <AuthSnackbar />
     </div>
   )
 }

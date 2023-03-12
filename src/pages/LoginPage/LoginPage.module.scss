@@ -19,19 +19,6 @@
     margin-bottom: 40px;
   }
 
-  &__form {
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-
-    margin-bottom: 24px;
-
-    &_btn {
-      width: 120px;
-      margin: 0 auto !important;
-    }
-  }
-
   &__text {
     font-size: 18px;
     color: #555;

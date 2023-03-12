@@ -12,6 +12,8 @@ import { LoginPage } from './pages/LoginPage';
 import { NotFoundPage } from './pages/NotFoundPage';
 import { GoodsPage } from './pages/GoodsPage';
 import { ProductDetailPage } from './pages/ProductDetailPage/ProductDetailPage';
+import { SignUpPage } from './pages/SignUpPage/SignUpPage';
+import { AccountPage } from './pages/AccountPage';
 
 function App() {
   const dispatch = useAppDispatch();
@@ -72,6 +74,8 @@ function App() {
           />
           <Route path={ROUTER.cart} element={<CartPage />} />
           <Route path={ROUTER.login} element={<LoginPage />} />
+          <Route path={ROUTER.signUp} element={<SignUpPage />} />
+          <Route path={ROUTER.account} element={<AccountPage />} />
           <Route path={ROUTER.productDetalePage} element={<ProductDetailPage />} />
           <Route path='*' element={<NotFoundPage />} />
         </Routes>

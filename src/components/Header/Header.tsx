@@ -3,6 +3,7 @@ import styles from './Header.module.scss';
 import logo from '../../assets/icons/logo.png';
 import { Counter } from '../Counter';
 import { useAppSelector } from '../../features/hooks/hooks';
+import { useAuth } from '../../features/hooks/useAuth';
 
 export const ROUTER = {
   home: '/',
@@ -12,12 +13,15 @@ export const ROUTER = {
   watches: '/watches',
   cart: '/cart',
   login: '/login',
-  productDetalePage: ':itemId',
+  signUp: '/registration',
+  account: '/account',
+  productDetalePage: '/goods/:itemId',
 };
 
 export const Header = () => {
-
   const { items } = useAppSelector(state => state.cartReducer)
+
+  const { isAuth } = useAuth();
 
   return (
     <div className={styles.header}>
@@ -57,6 +61,10 @@ export const Header = () => {
         <NavLink to="/cart" className={styles.header__item}>
           <div className={styles.header__cart}></div>
         </NavLink>
+
+        {isAuth && (
+          <div className={styles.header__signIn}></div>
+        )}
 
         <NavLink to="/login" className={styles.header__item}>
           <div className={styles.header__login}></div>

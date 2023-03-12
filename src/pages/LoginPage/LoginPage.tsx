@@ -1,37 +1,53 @@
+import { Navigate, NavLink, useNavigate } from 'react-router-dom';
+import { GoogleAuthProvider, signInWithEmailAndPassword, signInWithPopup } from 'firebase/auth';
+import { getAuth } from 'firebase/auth';
 import styles from './LoginPage.module.scss';
-import { Button, FormGroup, TextField } from "@mui/material";
-import { NavLink } from 'react-router-dom';
+import { useAppDispatch } from '../../features/hooks/hooks';
+import { setUser } from '../../features/reducers/userSlice';
+import { ROUTER } from '../../components/Header';
+import { useAuth } from '../../features/hooks/useAuth';
+import { Form } from '../../components/Form';
+import { closeSnack } from '../../features/reducers/snackSlice';
 
 export const LoginPage = () => {
-  return (
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+  const { isAuth } = useAuth();
+
+  const auth = getAuth();
+
+  const handleLogin = (email: string, password: string) => {
+    signInWithEmailAndPassword(auth, email, password)
+      .then(({ user }) => {
+        dispatch(setUser({
+          email: user.email,
+          token: user.refreshToken,
+          id: user.uid,
+        }))
+        navigate('/account')
+        dispatch(closeSnack())
+      })
+      .catch(() => alert('Invalid user!'))
+  }
+
+  const signInWithGoogle = async () => {
+    try {
+      const provider = new GoogleAuthProvider();
+      await signInWithPopup(auth, provider);
+    } catch (error) {
+      console.log(error)
+    }
+  };
+
+  return !isAuth ? (
     <div className={styles.login}>
       <div className={styles.login__content}>
         <h1 className={styles.login__title}>Sign In</h1>
-
-        <FormGroup className={styles.login__form}>
-          <TextField
-            label={"Email"}
-            name="email"
-            placeholder="Email"
-            autoComplete="off"
-            value=''
-          />
-
-          <TextField
-            label={"Password"}
-            name="password"
-            type="password"
-            placeholder="Password"
-            value=''
-          />
-
-          <Button className={styles.login__form_btn} variant={"outlined"}>Sign In</Button>
-        </FormGroup>
-
+        <Form action={'Sing In'} handleClick={handleLogin} />
         <p className={styles.login__text}>Don't you have an account?</p>
 
         <div className={styles.login__signUp}>
-          <div className={styles.login__google}>
+          <div className={styles.login__google} onClick={signInWithGoogle}>
             <div className={styles.login__google_wrap}>
               <img
                 className={styles.login__google_icon}
@@ -41,11 +57,13 @@ export const LoginPage = () => {
             <p className={styles.login__google_text}><b>Sign in with google</b></p>
           </div>
 
-          <NavLink to='/registration'>
+          <NavLink to={ROUTER.signUp}>
             <button className={styles.login__signUp_bn}>Sign Up</button>
           </NavLink>
         </div>
       </div>
     </div>
+  ) : (
+    <Navigate to={ROUTER.account} />
   )
 }
