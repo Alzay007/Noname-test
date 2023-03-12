@@ -2,15 +2,15 @@ import { Product } from "../../types/Product";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 interface GoodsState {
-  phones: Product[],
-  phone: Product | null,
+  goods: Product[],
+  product: Product | null,
   isLoading: boolean,
   isError: boolean,
 }
 
 const initialState: GoodsState = {
-  phones: [],
-  phone: null,
+  goods: [],
+  product: null,
   isLoading: false,
   isError: false,
 }
@@ -19,19 +19,19 @@ export const goodsSlice = createSlice({
   name: 'goods',
   initialState,
   reducers: {
-    phonesFetching(state) {
+    goodsFetching(state) {
       state.isLoading = true;
-      state.phone = null;
+      state.product = null;
     },
-    phonesFetchingSuccess(state, action: PayloadAction<Product[]>) {
+    goodsFetchingSuccess(state, action: PayloadAction<Product[]>) {
       state.isLoading = false;
-      state.phones = action.payload;
+      state.goods = action.payload;
     },
-    phoneFetchingSuccess(state, action: PayloadAction<Product>) {
+    productFetchingSuccess(state, action: PayloadAction<Product>) {
       state.isLoading = false;
-      state.phone = action.payload;
+      state.product = action.payload;
     },
-    phonesFetchingError(state) {
+    goodsFetchingError(state) {
       state.isLoading = false;
       state.isError = true;
     }
@@ -41,8 +41,8 @@ export const goodsSlice = createSlice({
 export default goodsSlice.reducer;
 
 export const {
-  phonesFetching,
-  phonesFetchingSuccess,
-  phoneFetchingSuccess,
-  phonesFetchingError
+  goodsFetching,
+  goodsFetchingSuccess,
+  productFetchingSuccess,
+  goodsFetchingError
 } = goodsSlice.actions;

@@ -2,10 +2,12 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 interface CartState {
   items: string[];
+  isModalOpen: boolean;
 }
 
 const initialState: CartState = {
   items: [],
+  isModalOpen: false,
 };
 
 const cartSlice = createSlice({
@@ -26,6 +28,10 @@ const cartSlice = createSlice({
     },
     clearItems: (state) => {
       state.items = [];
+      state.isModalOpen = true;
+    },
+    closeModal: state => {
+      state.isModalOpen = false;
     }
   },
 });
@@ -34,7 +40,8 @@ export const {
   addItem,
   addItems,
   removeItem,
-  clearItems
+  clearItems,
+  closeModal
 } = cartSlice.actions;
 
 export default cartSlice.reducer;
