@@ -3,7 +3,7 @@ import styles from './Title.module.scss';
 import arrow from '../../assets/icons/greyArrowLeft.svg';
 
 interface Props {
-  title: string;
+  title: string | undefined;
 }
 
 export const Title: React.FC<Props> = ({ title }) => {

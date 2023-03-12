@@ -14,13 +14,3 @@ export const fetchGoods = () => async (dispatch: AppDispatch) => {
     dispatch(goodsSlice.actions.goodsFetchingError())
   }
 }
-
-export const fetchOnePhone = (id: number) => async (dispatch: AppDispatch) => {
-  try {
-    dispatch(goodsSlice.actions.goodsFetching())
-    const response = await axios.get<Product>(BASE_URL + `${id}`)
-    dispatch(goodsSlice.actions.productFetchingSuccess(response.data))
-  } catch (e) {
-    dispatch(goodsSlice.actions.goodsFetchingError())
-  }
-}

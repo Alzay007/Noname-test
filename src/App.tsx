@@ -11,6 +11,7 @@ import { HomePage } from './pages/HomePage';
 import { LoginPage } from './pages/LoginPage';
 import { NotFoundPage } from './pages/NotFoundPage';
 import { GoodsPage } from './pages/GoodsPage';
+import { ProductDetailPage } from './pages/ProductDetailPage/ProductDetailPage';
 
 function App() {
   const dispatch = useAppDispatch();
@@ -38,9 +39,10 @@ function App() {
     return goods.filter((item) => item.category === 'tablets')
   }, [goods])
 
-  // const laptopsList = useMemo(() => {
-  //   return goods.filter((item) => item.category === 'laptops')
-  // }, [goods])
+  const laptopsList = useMemo(() => {
+    return goods
+      .filter((item) => item.category === 'laptops')
+  }, [goods])
 
   const watchesList = useMemo(() => {
     return goods.filter((item) => item.category === 'watches')
@@ -60,16 +62,17 @@ function App() {
             path={ROUTER.tablets}
             element={<GoodsPage goodsList={tabletsList} title={'Tablets'} />}
           />
-          {/* <Route
+          <Route
             path={ROUTER.laptops}
             element={<GoodsPage goodsList={laptopsList} title={'Laptops'} />}
-          /> */}
+          />
           <Route
             path={ROUTER.watches}
             element={<GoodsPage goodsList={watchesList} title={'Watches'} />}
           />
           <Route path={ROUTER.cart} element={<CartPage />} />
           <Route path={ROUTER.login} element={<LoginPage />} />
+          <Route path={ROUTER.productDetalePage} element={<ProductDetailPage />} />
           <Route path='*' element={<NotFoundPage />} />
         </Routes>
       </div>

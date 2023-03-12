@@ -28,7 +28,7 @@ export const Card: React.FC<Props> = ({ product }) => {
 
   return (
     <div className={styles.card}>
-      <NavLink to={`/phones/${product.itemId}`}>
+      <NavLink to={`/${product.itemId}`}>
         <img
           src={`${BASE_URL}/${image}`}
           alt="card-logo"
