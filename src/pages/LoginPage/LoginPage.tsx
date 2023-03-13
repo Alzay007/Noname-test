@@ -34,6 +34,7 @@ export const LoginPage = () => {
     try {
       const provider = new GoogleAuthProvider();
       await signInWithPopup(auth, provider);
+      console.log(provider)
     } catch (error) {
       console.log(error)
     }
