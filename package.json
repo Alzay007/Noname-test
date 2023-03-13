@@ -59,6 +59,7 @@
     "@types/react-scroll": "^1.8.6",
     "@typescript-eslint/eslint-plugin": "^5.41.0",
     "@typescript-eslint/parser": "^5.41.0",
+    "gh-pages": "^4.0.0",
     "eslint": "^8.26.0",
     "eslint-plugin-react": "^7.31.10",
     "prettier": "2.7.1"
