@@ -1,6 +1,4 @@
 # Noname-Digital
-
-- [Demo link](https://alzay007.github.io/Noname-test/)
 - [Api repo](https://github.com/Alzay007/noname-api)
 
 ## Technologies used:
